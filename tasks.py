@@ -47,10 +47,10 @@ class BowtieAlign(luigi.Task):
     def run(self):
         bowtie = sh.Command(self.bowtie_path)
         args = '{0} -x {1}'.format(
-            self.bowtie_options, self.forward_reads
+            self.bowtie_options, self.input().path.replace('.1.bt2','')
         )
         if self.reverse_reads:
-            args += ' -1 {1} -2 {2}'.format(self.forward_reads, self.reverse_reads)
+            args += ' -1 {0} -2 {1}'.format(self.forward_reads, self.reverse_reads)
         else:
             args += ' -U {0}'.format(self.forward_reads)
         args += ' -S bowtie-output.sam'
